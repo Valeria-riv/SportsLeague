@@ -27,10 +27,16 @@ public class MappingProfile : Profile
         // Tournament mappings
         CreateMap<TournamentRequestDTO, Tournament>();
         CreateMap<Tournament, TournamentResponseDTO>()
-            .ForMember(
-                dest => dest.TeamsCount,
-                opt => opt.MapFrom(src =>
-                    src.TournamentTeams != null ? src.TournamentTeams.Count : 0));
+            .ForMember(dest => dest.TeamsCount,opt => opt.MapFrom(src => src.TournamentTeams != null ? src.TournamentTeams.Count : 0));
 
+        // Sponsor mappings
+        CreateMap<SponsorRequestDTO, Sponsor>();
+        CreateMap<Sponsor, SponsorResponseDTO>();
+
+        // TournamentSponsor mappings
+        CreateMap<TournamentSponsorRequestDTO, TournamentSponsor>();
+        CreateMap<TournamentSponsor, TournamentSponsorResponseDTO>()
+            .ForMember(dest => dest.TournamentName, opt => opt.MapFrom(src => src.Tournament.Name))
+            .ForMember(dest => dest.SponsorName, opt => opt.MapFrom(src => src.Sponsor.Name));
     }
 }
