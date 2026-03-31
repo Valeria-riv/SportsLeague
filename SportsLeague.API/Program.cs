@@ -19,14 +19,15 @@ builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();   // FASE 2
 builder.Services.AddScoped<IRefereeRepository, RefereeRepository>();           // FASE 3
 builder.Services.AddScoped<ITournamentRepository, TournamentRepository>();     // FASE 3
 builder.Services.AddScoped<ITournamentTeamRepository, TournamentTeamRepository>(); // FASE 3
-
+builder.Services.AddScoped<ISponsorRepository, SponsorRepository>();
+builder.Services.AddScoped<ITournamentSponsorRepository, TournamentSponsorRepository>();
 
 // ── Services ──
 builder.Services.AddScoped<ITeamService, TeamService>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();         // FASE 2
 builder.Services.AddScoped<IRefereeService, RefereeService>();           // FASE 3
 builder.Services.AddScoped<ITournamentService, TournamentService>();     // FASE 3
-
+builder.Services.AddScoped<ISponsorService, SponsorService>();
 
 
 // ── AutoMapper ──
