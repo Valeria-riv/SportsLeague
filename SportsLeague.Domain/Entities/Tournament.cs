@@ -12,4 +12,6 @@ public class Tournament : AuditBase
 
     // Navigation Properties
     public ICollection<TournamentTeam> TournamentTeams { get; set; } = new List<TournamentTeam>();
+    // Add Navigation property for sponsors
+    public ICollection<TournamentSponsor> TournamentSponsors { get; set; } = new List<TournamentSponsor>();
 }
