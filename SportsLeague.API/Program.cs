@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SportsLeague.DataAccess.Context;
 using SportsLeague.DataAccess.Repositories;
+using SportsLeague.Domain.Helpers;
 using SportsLeague.Domain.Interfaces.Repositories;
 using SportsLeague.Domain.Interfaces.Services;
 using SportsLeague.Domain.Services;
@@ -19,15 +20,25 @@ builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();   // FASE 2
 builder.Services.AddScoped<IRefereeRepository, RefereeRepository>();           // FASE 3
 builder.Services.AddScoped<ITournamentRepository, TournamentRepository>();     // FASE 3
 builder.Services.AddScoped<ITournamentTeamRepository, TournamentTeamRepository>(); // FASE 3
-builder.Services.AddScoped<ISponsorRepository, SponsorRepository>();
-builder.Services.AddScoped<ITournamentSponsorRepository, TournamentSponsorRepository>();
+builder.Services.AddScoped<ISponsorRepository, SponsorRepository>(); // PARCIAL
+builder.Services.AddScoped<ITournamentSponsorRepository, TournamentSponsorRepository>(); // PARCIAL
+builder.Services.AddScoped<IMatchRepository, MatchRepository>(); // FASE 4
+builder.Services.AddScoped<IMatchResultRepository, MatchResultRepository>(); // FASE 5
+builder.Services.AddScoped<IGoalRepository, GoalRepository>(); // FASE 5
+builder.Services.AddScoped<ICardRepository, CardRepository>(); // FASE 5
+
 
 // ── Services ──
 builder.Services.AddScoped<ITeamService, TeamService>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();         // FASE 2
 builder.Services.AddScoped<IRefereeService, RefereeService>();           // FASE 3
 builder.Services.AddScoped<ITournamentService, TournamentService>();     // FASE 3
-builder.Services.AddScoped<ISponsorService, SponsorService>();
+builder.Services.AddScoped<ISponsorService, SponsorService>(); // PARCIAL
+builder.Services.AddScoped<IMatchService, MatchService>(); // FASE 4
+builder.Services.AddScoped<IMatchEventService, MatchEventService>(); // FASE 5
+builder.Services.AddScoped<MatchValidationHelper>(); // FASE 5
+
+
 
 
 // ── AutoMapper ──
