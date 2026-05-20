@@ -21,6 +21,7 @@ namespace SportsLeague.DataAccess.Context
         public DbSet<MatchResult> MatchResults => Set<MatchResult>(); // FASE 5
         public DbSet<Goal> Goals => Set<Goal>(); // FASE 5
         public DbSet<Card> Cards => Set<Card>(); // FASE 5
+        public DbSet<MatchLineup> MatchLineups => Set<MatchLineup>(); // PARCIAL
 
 
 
@@ -312,6 +313,32 @@ namespace SportsLeague.DataAccess.Context
 
                 // Si eliminamos un partido, se eliminan goles y tarjetas (Cascade).
                 // Pero no eliminamos goles/tarjetas al eliminar un jugador (Restrict), para preservar el historial.
+            });
+
+            // ── MatchLineup Configuration ──
+            modelBuilder.Entity<MatchLineup>(entity =>
+            {
+                entity.HasKey(ml => ml.Id);
+                entity.Property(ml => ml.Position).IsRequired().HasMaxLength(20);
+                entity.Property(ml => ml.IsStarter).IsRequired();
+                entity.Property(ml => ml.CreatedAt).IsRequired();
+                entity.Property(ml => ml.UpdatedAt).IsRequired(false);
+
+                // Relación con Match
+                entity.HasOne(ml => ml.Match)
+                      .WithMany(m => m.MatchLineups)
+                      .HasForeignKey(ml => ml.MatchId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                // Relación con Player
+                entity.HasOne(ml => ml.Player)
+                      .WithMany(p => p.MatchLineups)
+                      .HasForeignKey(ml => ml.PlayerId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                // Índice único compuesto, no permite registrar el mismo jugador dos veces en el mismo partido
+                entity.HasIndex(ml => new { ml.MatchId, ml.PlayerId })
+                      .IsUnique();
             });
 
         }

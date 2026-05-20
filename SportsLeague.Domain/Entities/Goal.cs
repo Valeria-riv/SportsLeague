@@ -4,8 +4,8 @@ namespace SportsLeague.Domain.Entities;
 
 public class Goal : AuditBase
 {
-    public int MatchId { get; set; }
-    public int PlayerId { get; set; }
+    public int MatchId { get; set; } // FK to Match
+    public int PlayerId { get; set; } // FK to Player
     public int Minute { get; set; }
     public GoalType Type { get; set; }
 

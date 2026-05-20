@@ -4,10 +4,10 @@ namespace SportsLeague.Domain.Entities;
 
 public class Match : AuditBase
 {
-    public int TournamentId { get; set; }
-    public int HomeTeamId { get; set; }
-    public int AwayTeamId { get; set; }
-    public int RefereeId { get; set; }
+    public int TournamentId { get; set; } // FK to Tournament
+    public int HomeTeamId { get; set; } // FK to Team (Home)
+    public int AwayTeamId { get; set; } // FK to Team (Away)
+    public int RefereeId { get; set; } // FK to Referee
     public DateTime MatchDate { get; set; }
     public string Venue { get; set; } = string.Empty;
     public int Matchday { get; set; }
@@ -26,5 +26,7 @@ public class Match : AuditBase
     public ICollection<Goal> Goals { get; set; } = new List<Goal>();
     // Relación 1:N con tarjetas
     public ICollection<Card> Cards { get; set; } = new List<Card>();
+    // Relacion 1:N con alineaciones
+    public ICollection<MatchLineup> MatchLineups { get; set; } = new List<MatchLineup>();
 
 }
