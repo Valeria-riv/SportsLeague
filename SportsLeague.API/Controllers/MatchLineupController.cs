@@ -14,9 +14,7 @@ namespace SportsLeague.API.Controllers
         private readonly IMatchLineupService _matchLineupService;
         private readonly IMapper _mapper;
 
-        public MatchLineupController(
-            IMatchLineupService matchLineupService,
-            IMapper mapper)
+        public MatchLineupController( IMatchLineupService matchLineupService, IMapper mapper)
         {
             _matchLineupService = matchLineupService;
             _mapper = mapper;
@@ -42,9 +40,7 @@ namespace SportsLeague.API.Controllers
         }
 
         [HttpGet("team/{teamId}")]
-        public async Task<ActionResult<IEnumerable<MatchLineupResponseDTO>>> GetByMatchAndTeam(
-            int matchId,
-            int teamId)
+        public async Task<ActionResult<IEnumerable<MatchLineupResponseDTO>>> GetByMatchAndTeam(int matchId, int teamId)
         {
             try
             {
@@ -63,9 +59,7 @@ namespace SportsLeague.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<MatchLineupResponseDTO>> Create(
-            int matchId,
-            MatchLineupRequestDTO request)
+        public async Task<ActionResult<MatchLineupResponseDTO>> Create(int matchId, MatchLineupRequestDTO request)
         {
             try
             {
