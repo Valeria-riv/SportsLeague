@@ -27,6 +27,7 @@ builder.Services.AddScoped<IMatchRepository, MatchRepository>(); // FASE 4
 builder.Services.AddScoped<IMatchResultRepository, MatchResultRepository>(); // FASE 5
 builder.Services.AddScoped<IGoalRepository, GoalRepository>(); // FASE 5
 builder.Services.AddScoped<ICardRepository, CardRepository>(); // FASE 5
+builder.Services.AddScoped<IMatchLineupRepository, MatchLineupRepository>(); // Parcial
 
 
 // ── Services ──
@@ -39,8 +40,7 @@ builder.Services.AddScoped<IMatchService, MatchService>(); // FASE 4
 builder.Services.AddScoped<IMatchEventService, MatchEventService>(); // FASE 5
 builder.Services.AddScoped<MatchValidationHelper>(); // FASE 5
 builder.Services.AddScoped<IStandingsService, StandingsService>(); // FASE 6
-
-
+builder.Services.AddScoped<IMatchLineupService, MatchLineupService>(); // Parcial
 
 
 // ── AutoMapper ──

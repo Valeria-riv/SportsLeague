@@ -121,8 +121,11 @@ namespace SportsLeague.Domain.Services
                 lineup.PlayerId,
                 lineup.MatchId);
 
+                var created = await _matchLineupRepository.CreateAsync(lineup);
+
             return await _matchLineupRepository
-                .CreateAsync(lineup);
+                .GetByIdWithDetailsAsync(created.Id)
+                ?? created;
         }
 
         public async Task DeleteAsync(int id)

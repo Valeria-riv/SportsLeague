@@ -51,5 +51,13 @@ namespace SportsLeague.DataAccess.Repositories
                     ml.Player.TeamId == teamId &&
                     ml.IsStarter);
         }
+
+        public async Task<MatchLineup?> GetByIdWithDetailsAsync(int id)
+        {
+            return await _dbSet
+                .Include(ml => ml.Player)
+                    .ThenInclude(p => p.Team)
+                .FirstOrDefaultAsync(ml => ml.Id == id);
+        }
     }
 }
