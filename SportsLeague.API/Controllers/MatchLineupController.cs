@@ -25,11 +25,9 @@ namespace SportsLeague.API.Controllers
         {
             try
             {
-                var lineup = await _matchLineupService
-                    .GetByMatchAsync(matchId);
+                var lineup = await _matchLineupService.GetByMatchAsync(matchId);
 
-                var response = _mapper
-                    .Map<IEnumerable<MatchLineupResponseDTO>>(lineup);
+                var response = _mapper.Map<IEnumerable<MatchLineupResponseDTO>>(lineup);
 
                 return Ok(response);
             }
@@ -44,11 +42,9 @@ namespace SportsLeague.API.Controllers
         {
             try
             {
-                var lineup = await _matchLineupService
-                    .GetByMatchAndTeamAsync(matchId, teamId);
+                var lineup = await _matchLineupService.GetByMatchAndTeamAsync(matchId, teamId);
 
-                var response = _mapper
-                    .Map<IEnumerable<MatchLineupResponseDTO>>(lineup);
+                var response = _mapper.Map<IEnumerable<MatchLineupResponseDTO>>(lineup);
 
                 return Ok(response);
             }
@@ -64,19 +60,13 @@ namespace SportsLeague.API.Controllers
             try
             {
                 var lineup = _mapper.Map<MatchLineup>(request);
-
                 lineup.MatchId = matchId;
 
-                var created = await _matchLineupService
-                    .CreateAsync(lineup);
+                var created = await _matchLineupService.CreateAsync(lineup);
 
-                var response = _mapper
-                    .Map<MatchLineupResponseDTO>(created);
+                var response = _mapper.Map<MatchLineupResponseDTO>(created);
 
-                return CreatedAtAction(
-                    nameof(GetByMatch),
-                    new { matchId = matchId },
-                    response);
+                return CreatedAtAction(nameof(GetByMatch), new { matchId = matchId },response);
             }
             catch (KeyNotFoundException ex)
             {

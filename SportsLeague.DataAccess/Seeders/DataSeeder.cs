@@ -47,9 +47,18 @@ namespace SportsLeague.DataAccess.Seeders
                 // 1. Atlético Nacional
                 new[] {
                     ("David", "Ospina", PlayerPosition.Goalkeeper, 1),
+                    ("Harlen", "Castillo", PlayerPosition.Goalkeeper, 12),
                     ("William", "Tesillo", PlayerPosition.Defender, 3),
+                    ("Cristian", "Zapata", PlayerPosition.Defender, 2),
+                    ("Juan", "Aguirre", PlayerPosition.Defender, 5),
+                    ("Álvaro", "Angulo", PlayerPosition.Defender, 17),
                     ("Edwin", "Cardona", PlayerPosition.Midfielder, 10),
+                    ("Jorman", "Campuzano", PlayerPosition.Midfielder, 8),
+                    ("Nelson", "Palacio", PlayerPosition.Midfielder, 14),
+                    ("Robert", "Mejía", PlayerPosition.Midfielder, 16),
                     ("Alfredo", "Morelos", PlayerPosition.Forward, 9),
+                    ("Dorlan", "Pabón", PlayerPosition.Forward, 11),
+                    ("Kevin", "Viveros", PlayerPosition.Forward, 19),
                 },
                 // 2. Independiente Medellín
                 new[] {
@@ -238,6 +247,70 @@ namespace SportsLeague.DataAccess.Seeders
                 });
             }
             await context.SaveChangesAsync();
+
+            // ═══ 6. CREAR UN PARTIDO DE PRUEBA ═══
+            var match = new Match
+            {
+                TournamentId = tournament.Id,
+                HomeTeamId = teams[0].Id,      // Atlético Nacional
+                AwayTeamId = teams[1].Id,      // Independiente Medellín
+                RefereeId = referees[0].Id,    // Wilmar Roldán
+                MatchDate = DateTime.UtcNow.AddDays(7),
+                Venue = "Atanasio Girardot",
+                Matchday = 1,
+                Status = MatchStatus.Scheduled
+            };
+
+            context.Matches.Add(match);
+            await context.SaveChangesAsync();
+
+            // ═══ 7. CREAR ALINEACIONES DE PRUEBA ═══
+
+            // Tomamos jugadores del equipo local (Atlético Nacional)
+            var nacionalPlayers = players.Where(p => p.TeamId == teams[0].Id).ToList();
+            var lineups = new List<MatchLineup>();
+
+            // Creamos 9 titulares para probar la validación de que máximo 11
+            for (int i = 0; i < 9 && i < nacionalPlayers.Count; i++)
+            {
+                lineups.Add(new MatchLineup
+                {
+                    MatchId = match.Id,
+                    PlayerId = nacionalPlayers[i].Id,
+                    IsStarter = true,
+                    Position = nacionalPlayers[i].Position switch
+                    {
+                        PlayerPosition.Goalkeeper => "GK",
+                        PlayerPosition.Defender => "DF",
+                        PlayerPosition.Midfielder => "MF",
+                        PlayerPosition.Forward => "FW",
+                        _ => "MF"
+                    }
+                });
+            }
+
+            // Agregamos algunos suplentes del equipo visitante
+            var medellinPlayers = players.Where(p => p.TeamId == teams[1].Id).ToList();
+
+            lineups.Add(new MatchLineup
+            {
+                MatchId = match.Id,
+                PlayerId = medellinPlayers[0].Id,
+                IsStarter = false,
+                Position = "GK"
+            });
+
+            lineups.Add(new MatchLineup
+            {
+                MatchId = match.Id,
+                PlayerId = medellinPlayers[1].Id,
+                IsStarter = false,
+                Position = "DF"
+            });
+
+            context.MatchLineups.AddRange(lineups);
+            await context.SaveChangesAsync();
+
         }
     }
 }
